@@ -1,0 +1,7 @@
+build/
+logs/
+pcaps/
+*.pyc
+__pycache__/
+*.pcap
+*.log
