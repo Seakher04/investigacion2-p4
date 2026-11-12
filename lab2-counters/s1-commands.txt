@@ -1,0 +1,17 @@
+table_add MyIngress.ipv4_reenvio MyIngress.reenviar 10.0.0.1 => 1
+table_add MyIngress.ipv4_reenvio MyIngress.reenviar 10.0.0.2 => 2
+table_add MyIngress.ipv4_reenvio MyIngress.reenviar 10.0.0.3 => 3
+table_add MyIngress.ipv4_reenvio MyIngress.reenviar 10.0.0.4 => 4
+table_add MyIngress.flujos MyIngress.contar_flujo 10.0.0.1 10.0.0.2 => 0
+table_add MyIngress.flujos MyIngress.contar_flujo 10.0.0.1 10.0.0.3 => 1
+table_add MyIngress.flujos MyIngress.contar_flujo 10.0.0.1 10.0.0.4 => 2
+table_add MyIngress.flujos MyIngress.contar_flujo 10.0.0.2 10.0.0.1 => 3
+table_add MyIngress.flujos MyIngress.contar_flujo 10.0.0.2 10.0.0.3 => 4
+table_add MyIngress.flujos MyIngress.contar_flujo 10.0.0.2 10.0.0.4 => 5
+table_add MyIngress.flujos MyIngress.contar_flujo 10.0.0.3 10.0.0.1 => 6
+table_add MyIngress.flujos MyIngress.contar_flujo 10.0.0.3 10.0.0.2 => 7
+table_add MyIngress.flujos MyIngress.contar_flujo 10.0.0.3 10.0.0.4 => 8
+table_add MyIngress.flujos MyIngress.contar_flujo 10.0.0.4 10.0.0.1 => 9
+table_add MyIngress.flujos MyIngress.contar_flujo 10.0.0.4 10.0.0.2 => 10
+table_add MyIngress.flujos MyIngress.contar_flujo 10.0.0.4 10.0.0.3 => 11
+register_write MyIngress.umbral_elefante 0 1000000
