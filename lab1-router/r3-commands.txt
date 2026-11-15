@@ -1,0 +1,7 @@
+# Reglas estáticas para r3 (p1=h4, p2=r2)
+table_set_default MyIngress.ipv4_lpm MyIngress.drop
+
+table_add MyIngress.ipv4_lpm MyIngress.ipv4_forward 10.0.1.0/24 => 08:00:00:03:02:00 08:00:00:02:03:00 2
+table_add MyIngress.ipv4_lpm MyIngress.ipv4_forward 10.0.2.0/24 => 08:00:00:03:02:00 08:00:00:02:03:00 2
+table_add MyIngress.ipv4_lpm MyIngress.ipv4_forward 10.0.3.0/24 => 08:00:00:03:02:00 08:00:00:02:03:00 2
+table_add MyIngress.ipv4_lpm MyIngress.ipv4_forward 10.0.4.0/24 => 08:00:00:03:01:00 08:00:00:00:04:04 1

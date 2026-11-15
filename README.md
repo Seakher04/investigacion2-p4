@@ -13,26 +13,31 @@ Universidad de Costa Rica
 
 ## Estructura del Repositorio
 
-El repositorio está organizado según los entregables solicitados en la sección 5.1 del enunciado:
+El repositorio está organizado según los entregables de la sección 5.1 del enunciado:
 
 ```text
 .
-├── setup_env.sh               # Script para instalar p4c, BMv2,Mininet,Scapy e iperf
-├── lab1-router/               # Implementación 1: Router IPv4 Estático (Sebastián)
+├── setup_env.sh               # Instala p4c, BMv2, Mininet, Scapy e iperf
+├── lab1-router/               # Implementación 1: Router IPv4 estático (Sebastián)
+│   ├── router.p4
+│   ├── r1-commands.txt
+│   ├── r2-commands.txt
+│   ├── r3-commands.txt
+│   ├── topology.py
+│   ├── verify_router.py
 │   └── README.md
-├── lab2-counters/             # Implementación 2: Contadores y Estadísticas de Tráfico (Marina)
+├── lab2-counters/             # Implementación 2: Contadores y estadísticas (Marina)
 │   └── README.md
 ├── lab3-int/                  # Implementación 3: Telemetría In-Band INT (Hermes)
 │   └── README.md
-└── informe/                   # Informe escrito en formato PDF
-    └── README.md
+└── informe/                   # Informe escrito en PDF y borradores
 ```
 
 ---
 
 ## Instalación del Entorno
 
-Para que todos trabajemos con las mismas versiones de las herramientas en Ubuntu / Debian:
+Probado para Ubuntu (20.04 / 22.04 / 24.04) y Debian (11 / 12 / 13) con soporte de red para Mininet:
 
 ```bash
 chmod +x setup_env.sh
@@ -40,14 +45,14 @@ chmod +x setup_env.sh
 ```
 
 El script instala:
-1. Herramientas base de red: Mininet, Scapy, iperf, tcpdump, wireshark-common.
-2. Repositorio oficial de P4lang: `p4c` (compilador), `BMv2` (`simple_switch` y `simple_switch_grpc`) y `PI`.
-3. Librerías de Python para el plano de control: `grpcio`, `protobuf`, `scapy`, `matplotlib`.
+1. Herramientas de red: `mininet`, `iperf`, `tcpdump`, `wireshark-common`, `ethtool`.
+2. Compilador y switch P4 de P4lang: `p4lang-p4c`, `p4lang-bmv2` (`simple_switch` y `simple_switch_grpc`) y `p4lang-pi`.
+3. Librerías de Python: `python3-scapy`, `python3-grpcio`, `python3-protobuf`, `python3-matplotlib`.
 
 ---
 
-## Asignación de Laboratorios
+## Ejecución de los Laboratorios
 
-- **/lab1-router/**: Router IPv4 estático, tabla LPM, reescritura de MAC, decremento de TTL y descarte por defecto.
-- **/lab2-counters/**: Contadores directos por flujo, globales por protocolo, monitoreo de tamaño y flujos elefante.
-- **/lab3-int/**: Telemetría In-Band (roles source, transit y sink), metadatos de latencia y colas, y colector en Python.
+- **Lab 1 (`/lab1-router`):** consulte [lab1-router/README.md](lab1-router/README.md).
+- **Lab 2 (`/lab2-counters`):** consulte [lab2-counters/README.md](lab2-counters/README.md).
+- **Lab 3 (`/lab3-int`):** consulte [lab3-int/README.md](lab3-int/README.md).
