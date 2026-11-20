@@ -123,6 +123,8 @@ struct metadata {
     bit<9>  orig_ingress_port;
     @field_list(CLONE_FL_1)
     bit<9>  orig_egress_port;
+    @field_list(CLONE_FL_1)
+    bit<48> orig_ingress_ts;
 }
 
 struct headers {
@@ -275,6 +277,7 @@ control MyIngress(inout headers hdr,
         meta.is_int_sink = 1;
         meta.orig_ingress_port = standard_metadata.ingress_port;
         meta.orig_egress_port = standard_metadata.egress_spec;
+        meta.orig_ingress_ts = standard_metadata.ingress_global_timestamp;
         clone_preserving_field_list(CloneType.I2E, mirror_session, CLONE_FL_1);
     }
 
@@ -344,7 +347,7 @@ control MyEgress(inout headers hdr,
     }
 
     /* Apila un registro de metadatos del salto actual o marca desbordamiento */
-    action push_int_hop(bit<9> in_port, bit<9> out_port) {
+    action push_int_hop(bit<9> in_port, bit<9> out_port, bit<48> ingress_ts) {
         if (hdr.int_ctrl.hop_count < hdr.int_ctrl.max_hops &&
             hdr.int_ctrl.hop_count < MAX_HOPS) {
             hdr.int_hops.push_front(1);
@@ -353,8 +356,7 @@ control MyEgress(inout headers hdr,
             hdr.int_hops[0].ingress_port = (bit<16>)in_port;
             hdr.int_hops[0].egress_port = (bit<16>)out_port;
             hdr.int_hops[0].hop_latency = (bit<32>)(
-                standard_metadata.egress_global_timestamp -
-                standard_metadata.ingress_global_timestamp
+                standard_metadata.egress_global_timestamp - ingress_ts
             );
             hdr.int_hops[0].qdepth = (bit<32>)standard_metadata.enq_qdepth;
             hdr.int_ctrl.hop_count = hdr.int_ctrl.hop_count + 1;
@@ -393,7 +395,9 @@ control MyEgress(inout headers hdr,
                 init_int_header();
             }
             if (hdr.int_ctrl.isValid()) {
-                push_int_hop(meta.orig_ingress_port, meta.orig_egress_port);
+                push_int_hop(meta.orig_ingress_port,
+                             meta.orig_egress_port,
+                             meta.orig_ingress_ts);
             }
         } else if (meta.is_int_sink == 1) {
             /*
@@ -410,7 +414,8 @@ control MyEgress(inout headers hdr,
             }
             if (hdr.int_ctrl.isValid()) {
                 push_int_hop(standard_metadata.ingress_port,
-                             standard_metadata.egress_port);
+                             standard_metadata.egress_port,
+                             standard_metadata.ingress_global_timestamp);
             }
         }
     }
