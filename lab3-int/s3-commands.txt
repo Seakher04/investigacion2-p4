@@ -1,0 +1,8 @@
+# Reglas de s3 (INT Transit - camino inferior alternativo, switch_id = 3)
+table_set_default MyEgress.int_switch_info MyEgress.set_switch_id 3
+
+# Enrutamiento IPv4 estático
+table_add MyIngress.ipv4_lpm MyIngress.ipv4_forward 10.0.1.0/24 => 08:00:00:03:01:00 08:00:00:01:04:00 1
+table_add MyIngress.ipv4_lpm MyIngress.ipv4_forward 10.0.2.0/24 => 08:00:00:03:01:00 08:00:00:01:04:00 1
+table_add MyIngress.ipv4_lpm MyIngress.ipv4_forward 10.0.3.0/24 => 08:00:00:03:02:00 08:00:00:04:03:00 2
+table_add MyIngress.ipv4_lpm MyIngress.ipv4_forward 10.0.4.0/24 => 08:00:00:03:02:00 08:00:00:04:03:00 2

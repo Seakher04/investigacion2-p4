@@ -1,0 +1,13 @@
+# Reglas de s1 (INT Source + Transit, switch_id = 1)
+table_set_default MyEgress.int_switch_info MyEgress.set_switch_id 1
+
+# Enrutamiento IPv4 estático (camino inicial hacia h3/c1: s1 -> s2 -> s4)
+table_add MyIngress.ipv4_lpm MyIngress.ipv4_forward 10.0.1.0/24 => 08:00:00:01:01:00 08:00:00:00:01:01 1
+table_add MyIngress.ipv4_lpm MyIngress.ipv4_forward 10.0.2.0/24 => 08:00:00:01:02:00 08:00:00:00:02:02 2
+table_add MyIngress.ipv4_lpm MyIngress.ipv4_forward 10.0.3.0/24 => 08:00:00:01:03:00 08:00:00:02:01:00 3
+table_add MyIngress.ipv4_lpm MyIngress.ipv4_forward 10.0.4.0/24 => 08:00:00:01:03:00 08:00:00:02:01:00 3
+
+# Watchlist de telemetría INT: (src_ip, dst_ip, proto, dst_port&&&mask => max_hops, priority)
+# Monitorea el tráfico de h1 (10.0.1.1) hacia h3 (10.0.3.1) en UDP/5001 y TCP/5001
+table_add MyIngress.int_watchlist MyIngress.activate_int 10.0.1.1 10.0.3.1 17 5001&&&0xffff => 8 1
+table_add MyIngress.int_watchlist MyIngress.activate_int 10.0.1.1 10.0.3.1 6 5001&&&0xffff => 8 1

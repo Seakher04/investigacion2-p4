@@ -1,0 +1,14 @@
+# Reglas de s4 (INT Transit + INT Sink, switch_id = 4)
+table_set_default MyEgress.int_switch_info MyEgress.set_switch_id 4
+
+# Sesión de clonación 100 -> puerto 4 (host colector c1)
+mirroring_add 100 4
+
+# Puerto 1 (hacia h3) actúa como INT Sink usando la sesión de clonación 100
+table_add MyIngress.int_sink_port MyIngress.set_int_sink 1 => 100
+
+# Enrutamiento IPv4 estático
+table_add MyIngress.ipv4_lpm MyIngress.ipv4_forward 10.0.3.0/24 => 08:00:00:04:01:00 08:00:00:00:03:03 1
+table_add MyIngress.ipv4_lpm MyIngress.ipv4_forward 10.0.4.0/24 => 08:00:00:04:04:00 08:00:00:00:04:04 4
+table_add MyIngress.ipv4_lpm MyIngress.ipv4_forward 10.0.1.0/24 => 08:00:00:04:02:00 08:00:00:02:02:00 2
+table_add MyIngress.ipv4_lpm MyIngress.ipv4_forward 10.0.2.0/24 => 08:00:00:04:02:00 08:00:00:02:02:00 2
