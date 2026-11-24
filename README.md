@@ -27,10 +27,23 @@ El repositorio está organizado según los entregables de la sección 5.1 del en
 │   ├── verify_router.py
 │   └── README.md
 ├── lab2-counters/             # Implementación 2: Contadores y estadísticas (Marina)
+│   ├── lab2.p4
+│   ├── s1-commands.txt
+│   ├── topology.py
+│   ├── controlador.py
+│   ├── trafico.py
+│   ├── receptor.py
+│   ├── verificar.py
 │   └── README.md
 ├── lab3-int/                  # Implementación 3: Telemetría In-Band INT (Hermes)
+│   ├── int.p4
+│   ├── s1-commands.txt .. s4-commands.txt
+│   ├── topology.py
+│   ├── collector.py
+│   ├── demo_control.py
+│   ├── verify_int.py
 │   └── README.md
-└── informe/                   # Informe escrito en PDF y borradores
+└── informe/                   # Informe escrito de la investigación (informe.pdf)
 ```
 
 ---
@@ -53,6 +66,19 @@ El script instala:
 
 ## Ejecución de los Laboratorios
 
-- **Lab 1 (`/lab1-router`):** consulte [lab1-router/README.md](lab1-router/README.md).
-- **Lab 2 (`/lab2-counters`):** consulte [lab2-counters/README.md](lab2-counters/README.md).
-- **Lab 3 (`/lab3-int`):** consulte [lab3-int/README.md](lab3-int/README.md).
+Cada laboratorio incluye un modo de pruebas automáticas y un modo interactivo con Mininet:
+
+- **Lab 1 — Router IPv4 Estático ([lab1-router/README.md](lab1-router/README.md)):**
+  ```bash
+  cd lab1-router && sudo mn -c && sudo python3 topology.py --test
+  ```
+- **Lab 2 — Contadores y Estadísticas ([lab2-counters/README.md](lab2-counters/README.md)):**
+  ```bash
+  cd lab2-counters && sudo mn -c && sudo python3 topology.py --verificar
+  ```
+- **Lab 3 — Telemetría In-Band INT ([lab3-int/README.md](lab3-int/README.md)):**
+  ```bash
+  cd lab3-int && sudo mn -c && sudo python3 topology.py --test
+  ```
+
+Para pruebas manuales paso a paso, ejecución interactiva y detalles de cada topología, consulte el `README.md` dentro de cada carpeta.
