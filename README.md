@@ -11,6 +11,12 @@ Universidad de Costa Rica
 
 ---
 
+## Video Demostrativo
+
+- [Ver video demostrativo en YouTube](https://youtu.be/fxOKgFDrxVI)
+
+---
+
 ## Estructura del Repositorio
 
 El repositorio está organizado según los entregables de la sección 5.1 del enunciado:
